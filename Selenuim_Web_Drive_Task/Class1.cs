@@ -41,12 +41,14 @@ namespace Selenuim_Web_Drive_Task
     
             signUpButton.Click();
 
+            m_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
+
             var expectedAlertText = "Form Submitted Successfully...";
             var alert_win = m_driver.SwitchTo().Alert();
 
             Assert.AreEqual(expectedAlertText, alert_win.Text);
 
-            m_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+            m_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
 
             alert_win.Accept();
 
