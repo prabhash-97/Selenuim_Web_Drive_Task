@@ -19,40 +19,61 @@ namespace Selenuim_Web_Drive_Task
         }
 
         [Test]
-        public void Test()
+        public void Test1()
         {
 
             m_driver.Url = testURL;
             m_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
 
-            IWebElement course = m_driver.FindElement(By.XPath(".//*[@id='awf_field-91977689']"));
-            IWebElement emailTextBox = m_driver.FindElement(By.CssSelector("input[id=philadelphia-field-email]"));
+            IWebElement SAPtitle = m_driver.FindElement(By.XPath("//*[@id=\"site-name\"]/a"));
 
-            WebDriverWait wait = new WebDriverWait(m_driver, TimeSpan.FromSeconds(50));
-            IWebElement signUpButton = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath(".//*[@id='philadelphia-field-submit']")));
+            Assert.AreEqual("Demo Site", SAPtitle.Text);
 
-            var selectTest = new SelectElement(course);
-            selectTest.SelectByValue("sap-abap");
+        }
 
+        [Test]
+        public void Test2()
+        {
+
+            m_driver.Url = testURL;
             m_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
+
+            IWebElement emailTextBox = m_driver.FindElement(By.CssSelector("input[id=philadelphia-field-email]"));
+            WebDriverWait wait = new WebDriverWait(m_driver, TimeSpan.FromSeconds(20));
+            IWebElement signUpButton = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.XPath(".//*[@id='philadelphia-field-submit']")));
 
             emailTextBox.Clear();
             emailTextBox.SendKeys("test123@gmail.com");
-    
             signUpButton.Click();
 
-            m_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
+            m_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
 
             var expectedAlertText = "Form Submitted Successfully...";
             var alert_win = m_driver.SwitchTo().Alert();
 
             Assert.AreEqual(expectedAlertText, alert_win.Text);
 
-            m_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
+            m_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
 
             alert_win.Accept();
 
         }
+
+        [Test]
+        public void Test3()
+        {
+
+            m_driver.Url = testURL;
+            m_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+
+            IWebElement course = m_driver.FindElement(By.XPath(".//*[@id='awf_field-91977689']"));
+
+            var selectTest = new SelectElement(course);
+            selectTest.SelectByValue("sap-abap");
+
+        }
+
+        
 
         [TearDown]
         public void closeBrowser()
